@@ -18,7 +18,7 @@ export default SectionTitle;
 const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
-    color: Color.MainColor,
+    color: Color.PrimaryText,
   },
   divider: {
     borderBottomWidth: 1,

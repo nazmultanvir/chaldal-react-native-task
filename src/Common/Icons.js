@@ -5,6 +5,7 @@ import { Image } from "react-native";
 import arrowBack from "../Assets/icons/arrowBack.png";
 import filter from "../Assets/icons/filter.png";
 import search from "../Assets/icons/search.png";
+import calendar from "../Assets/icons/calendar.png";
 
 const styles = {
   defaultStyle: {
@@ -17,6 +18,9 @@ const styles = {
 const Icons = {
   ArrowBack: (style = {}) => (
     <Image source={arrowBack} style={{ ...styles.defaultStyle, ...style }} />
+  ),
+  Calendar: (style = {}) => (
+    <Image source={calendar} style={{ ...styles.defaultStyle, ...style }} />
   ),
 };
 

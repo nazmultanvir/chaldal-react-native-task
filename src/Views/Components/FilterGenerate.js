@@ -2,13 +2,17 @@ import React from "react";
 import Colors from "../../Common/Color";
 import { View, Text, StyleSheet } from "react-native";
 import SectionTitle from "./SectionTitle";
+import DatePicker from "./DatePicker";
+import globalStyle from "../../Common/globalStyle";
 
 const FilterGenerate = () => {
   return (
     <View style={styles.filterContainer}>
       <SectionTitle title="Date">
-        <Text>filter</Text>
+        <DatePicker key="form" title="From" />
+        <DatePicker key="to" title="To" />
       </SectionTitle>
+      <View style={globalStyle.MarginTop15} />
       <SectionTitle title="Status">
         <Text>filter</Text>
       </SectionTitle>
