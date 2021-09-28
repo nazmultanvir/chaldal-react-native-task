@@ -9,17 +9,17 @@ import CheckBox from "../../Views/Components/CheckBox";
 const FilterGenerate = (props) => {
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [activeStatus, setActiveStatus] = useState(true);
-  const [supperActiveStatus, setSupperActiveStatus] = useState(true);
-  const [boredStatus, setBoredStatus] = useState(true);
+  const [active, setActive] = useState(true);
+  const [superActive, setSuperActive] = useState(true);
+  const [bored, setBored] = useState(true);
 
   const generateUserAnalysis = () => {
     let data = {
       fromDate,
       toDate,
-      activeStatus,
-      supperActiveStatus,
-      boredStatus,
+      active,
+      superActive,
+      bored,
     };
     props.generateAction(data);
   };
@@ -44,18 +44,18 @@ const FilterGenerate = (props) => {
         <View>
           <CheckBox
             title="Active"
-            value={activeStatus}
-            onChangeDate={(status) => setActiveStatus(status)}
+            value={active}
+            onChangeDate={(status) => setActive(status)}
           />
           <CheckBox
             title="Super Active"
-            value={supperActiveStatus}
-            onChangeDate={(status) => setSupperActiveStatus(status)}
+            value={superActive}
+            onChangeDate={(status) => setSuperActive(status)}
           />
           <CheckBox
             title="Bored"
-            value={boredStatus}
-            onChangeDate={(status) => setBoredStatus(status)}
+            value={bored}
+            onChangeDate={(status) => setBored(status)}
           />
         </View>
       </SectionTitle>
