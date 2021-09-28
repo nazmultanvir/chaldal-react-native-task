@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 //import component
@@ -7,9 +7,21 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-export default function FilteredList(props) {
-  filterGenerateAction = (data) => {
-    props.navigation.navigate("FilteredList");
+function FilteredList(props) {
+  const { navigation } = props;
+  // useEffect(() => {
+  //   filterGenerateAction();
+  // });
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     filterGenerateAction();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+  filterGenerateAction = async (data) => {
+    console.log("function is called !");
+
+    return null;
   };
   return (
     <MainLayout
@@ -27,6 +39,8 @@ export default function FilteredList(props) {
     </MainLayout>
   );
 }
+
+export default FilteredList;
 
 const styles = StyleSheet.create({
   pageTitleSection: {

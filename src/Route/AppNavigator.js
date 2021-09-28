@@ -8,11 +8,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Filter from "../Views/Screens/Filter";
 import FilteredList from "../Views/Screens/FilteredList";
 
-const forFade = ({ current }) => ({
-  cardStyle: {
-    opacity: current.progress,
-  },
-});
 const forSlide = ({ current, next, inverted, layouts: { screen } }) => {
   const progress = Animated.add(
     current.progress.interpolate({
@@ -60,11 +55,7 @@ function AppNavigator() {
         }}
         initialRouteName="Filter"
       >
-        <Stack.Screen
-          name="Filter"
-          component={Filter}
-          options={{ cardStyleInterpolator: forFade }}
-        />
+        <Stack.Screen name="Filter" component={Filter} />
         <Stack.Screen
           name="FilteredList"
           component={FilteredList}

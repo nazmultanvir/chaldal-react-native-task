@@ -7,9 +7,9 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-export default function Filter(props) {
+function Filter(props) {
   filterGenerateAction = (data) => {
-    props.navigation.navigate("FilteredList");
+    props.navigation.navigate("FilteredList", data);
   };
   return (
     <MainLayout title="Filter">
@@ -32,6 +32,7 @@ export default function Filter(props) {
   );
 }
 
+export default Filter;
 const styles = StyleSheet.create({
   pageTitleSection: {
     marginVertical: 20,
