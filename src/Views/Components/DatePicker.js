@@ -11,14 +11,14 @@ import Colors from "../../Common/Color";
 import Icons from "../../Common/Icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const DatePicker = ({ title }) => {
+const DatePicker = ({ title, value, onChangeDate }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date(value));
 
-  const onChangeDate = (event, selectedDate) => {
-    console.log(event, selectedDate);
+  const onChange = (event, selectedDate) => {
     setShowDatePicker(false);
     const currentDate = selectedDate || date;
+    onChangeDate(currentDate);
     setDate(currentDate);
   };
 
@@ -52,7 +52,7 @@ const DatePicker = ({ title }) => {
           onPress={() => setShowDatePicker(!showDatePicker)}
         >
           <View style={styles.DatePickerContainer}>
-            <Text style={styles.DateText}>{showDate(date)}</Text>
+            <Text style={styles.DateText}>{showDate(value)}</Text>
             {Icons.Calendar({})}
           </View>
         </TouchableOpacity>
@@ -64,7 +64,7 @@ const DatePicker = ({ title }) => {
           mode="date"
           is24Hour={true}
           display="default"
-          onChange={(e, date) => onChangeDate(e, date)}
+          onChange={(e, date) => onChange(e, date)}
         />
       )}
     </>

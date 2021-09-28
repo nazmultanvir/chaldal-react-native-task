@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Colors from "../../Common/Color";
 import { View, Text, StyleSheet } from "react-native";
 import SectionTitle from "./SectionTitle";
@@ -6,11 +6,23 @@ import DatePicker from "./DatePicker";
 import globalStyle from "../../Common/globalStyle";
 
 const FilterGenerate = () => {
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
   return (
     <View style={styles.filterContainer}>
       <SectionTitle title="Date">
-        <DatePicker key="form" title="From" />
-        <DatePicker key="to" title="To" />
+        <DatePicker
+          key="form"
+          title="From"
+          value={fromDate}
+          onChangeDate={(data) => setFromDate(data)}
+        />
+        <DatePicker
+          key="to"
+          title="To"
+          value={toDate}
+          onChangeDate={(data) => setToDate(data)}
+        />
       </SectionTitle>
       <View style={globalStyle.MarginTop15} />
       <SectionTitle title="Status">
