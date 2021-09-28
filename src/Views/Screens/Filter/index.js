@@ -7,8 +7,10 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-export default function Filter() {
-  filterGenerateAction = () => {};
+export default function Filter(props) {
+  filterGenerateAction = (data) => {
+    props.navigation.navigate("FilteredList");
+  };
   return (
     <MainLayout title="Filter">
       <View
@@ -21,7 +23,9 @@ export default function Filter() {
           </Text>
         </View>
         <View style={styles.filterSection}>
-          <FilterGenerate generateAction={() => filterGenerateAction()} />
+          <FilterGenerate
+            generateAction={(data) => filterGenerateAction(data)}
+          />
         </View>
       </View>
     </MainLayout>

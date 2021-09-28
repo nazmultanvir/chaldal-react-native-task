@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     color: Color.PrimaryText,
+    fontSize: 16,
   },
   divider: {
     borderBottomWidth: 1,
