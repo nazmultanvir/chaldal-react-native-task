@@ -7,11 +7,11 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-function FilteredList(props) {
+const FilteredList = (props) => {
   const { navigation } = props;
-  // useEffect(() => {
-  //   filterGenerateAction();
-  // });
+  useEffect(() => {
+    filterGenerateAction();
+  });
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener("focus", () => {
   //     filterGenerateAction();
@@ -27,7 +27,7 @@ function FilteredList(props) {
     <MainLayout
       title="Filtered List"
       isBack
-      backAction={() => props.navigation.goBack()}
+      backAction={() => navigation.popToTop()}
     >
       <View
         style={[globalStyle.Horizontal15Padding, globalStyle.Vertical15Padding]}
@@ -38,7 +38,7 @@ function FilteredList(props) {
       </View>
     </MainLayout>
   );
-}
+};
 
 export default FilteredList;
 

@@ -7,9 +7,9 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-function Filter(props) {
+const Filter = ({ navigation }) => {
   filterGenerateAction = (data) => {
-    props.navigation.navigate("FilteredList", data);
+    navigation.push("FilteredList");
   };
   return (
     <MainLayout title="Filter">
@@ -30,7 +30,7 @@ function Filter(props) {
       </View>
     </MainLayout>
   );
-}
+};
 
 export default Filter;
 const styles = StyleSheet.create({
