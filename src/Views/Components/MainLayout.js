@@ -1,23 +1,43 @@
 import React from "react";
-import { SafeAreaView, StatusBar, StyleSheet, View, Text } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import Colors from "../../Common/Color";
+import Icons from "../../Common/Icons";
+import globalStyle from "../../Common/globalStyle";
 
-const MainLayout = ({ children, title, isBack }) => {
+const MainLayout = ({ children, title, isBack, backAction }) => {
   return (
     <SafeAreaView style={styles.container}>
+      {/* statusbar color  */}
       <StatusBar backgroundColor={Colors.StatusBar} barStyle="light-content" />
       <View style={styles.headerContainer}>
+        {/* checking to show go back arrow */}
         {isBack ? (
-          <TouchableOpacity>
-            <Text style={styles.headerTitleText}>{title}</Text>
+          <TouchableOpacity
+            style={[globalStyle.Row, globalStyle.center]}
+            onPress={() => backAction()}
+          >
+            {Icons.ArrowBack({ tintColor: "#fff" })}
+            <Text style={[globalStyle.MarginLeft15, styles.headerTitleText]}>
+              {title}
+            </Text>
           </TouchableOpacity>
         ) : (
           <Text style={styles.headerTitleText}>{title}</Text>
         )}
       </View>
-      <View>{children}</View>
+      <ScrollView>
+        {children}
+        <View style={{ paddingBottom: 30 }} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -48,4 +68,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  headerTitleRow: {},
 });
