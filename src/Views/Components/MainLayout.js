@@ -6,14 +6,16 @@ import {
   ScrollView,
   View,
   Text,
+  Dimensions,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import Colors from "../../Common/Color";
 import Icons from "../../Common/Icons";
 import globalStyle from "../../Common/globalStyle";
+const { width, height } = Dimensions.get("window");
 
-const MainLayout = ({ children, title, isBack, backAction }) => {
+const MainLayout = ({ children, title, isBack, backAction, withoutScroll }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* statusbar color  */}
@@ -34,10 +36,14 @@ const MainLayout = ({ children, title, isBack, backAction }) => {
           <Text style={styles.headerTitleText}>{title}</Text>
         )}
       </View>
-      <ScrollView>
-        {children}
-        <View style={{ paddingBottom: 30 }} />
-      </ScrollView>
+      {withoutScroll ? (
+        <View style={{ flex: 1, flexDirection: "column" }}>{children}</View>
+      ) : (
+        <ScrollView>
+          {children}
+          <View style={{ paddingBottom: 30 }} />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

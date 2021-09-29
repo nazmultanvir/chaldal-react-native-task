@@ -55,9 +55,9 @@ function AppNavigator() {
         }}
         initialRouteName="FilteredList"
       >
-        <Stack.Screen key="filter" name="Filter" component={Filter} />
+        <Stack.Screen key="Filter" name="Filter" component={Filter} />
         <Stack.Screen
-          key="filteredList"
+          key="FilteredList"
           name="FilteredList"
           component={FilteredList}
           options={{ cardStyleInterpolator: forSlide }}

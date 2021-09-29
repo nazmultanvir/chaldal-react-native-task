@@ -22,6 +22,9 @@ const Icons = {
   Calendar: (style = {}) => (
     <Image source={calendar} style={{ ...styles.defaultStyle, ...style }} />
   ),
+  Filter: (style = {}) => (
+    <Image source={filter} style={{ ...styles.defaultStyle, ...style }} />
+  ),
 };
 
 export default Icons;
