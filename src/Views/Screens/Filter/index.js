@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 //import component
@@ -8,8 +8,13 @@ import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
 const Filter = ({ navigation }) => {
+  const [fromDate, setFromDate] = useState(new Date("2016-05-10"));
+  const [toDate, setToDate] = useState(new Date("2017-05-16"));
+  const [active, setActive] = useState(true);
+  const [superActive, setSuperActive] = useState(true);
+  const [bored, setBored] = useState(true);
   filterGenerateAction = (data) => {
-    navigation.push("FilteredList");
+    navigation.push("FilteredList", { filter: data });
   };
   return (
     <MainLayout title="Filter">
@@ -24,6 +29,11 @@ const Filter = ({ navigation }) => {
         </View>
         <View style={styles.filterSection}>
           <FilterGenerate
+            from={fromDate}
+            to={toDate}
+            activeStatus={active}
+            superActiveStatus={superActive}
+            boredStatus={bored}
             generateAction={(data) => filterGenerateAction(data)}
           />
         </View>

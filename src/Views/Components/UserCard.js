@@ -1,17 +1,32 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Color from "../../Common/Color";
-import globalStyle from "../../Common/globalStyle";
 
 const UserCard = ({ title, data, children }) => {
-  const { profile } = data;
+  const status = (meal) => {
+    if (meal >= 10) {
+      return "Super Active";
+    } else if (meal >= 5) {
+      return "Active";
+    } else {
+      return "Bored";
+    }
+  };
   return (
     <View style={[styles.container, styles.card]}>
-      <Image
-        style={styles.profileImage}
-        source={{ uri: profile?.pictureUrl }}
-      />
-      <Text style={styles.title}>{profile?.name}</Text>
+      <Image style={styles.profileImage} source={{ uri: data?.pictureUrl }} />
+      <View
+        style={[
+          styles.userStatus,
+          {
+            backgroundColor:
+              status(data.meal) == "Bored" ? "#ff5722" : Color.MainColor,
+          },
+        ]}
+      >
+        <Text style={styles.userStatusText}>{status(data.meal)}</Text>
+      </View>
+      <Text style={styles.title}>{data?.name}</Text>
     </View>
   );
 };
@@ -37,9 +52,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
   },
+  userStatus: {
+    position: "absolute",
+    right: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    top: 20,
+    flex: 1,
+  },
+  userStatusText: {
+    color: "#fff",
+    textAlign: "center",
+    justifyContent: "center",
+  },
   title: {
-    fontSize: 20,
+    height: 40,
     padding: 5,
     color: Color.SecondaryText,
+    fontSize: 16,
   },
 });

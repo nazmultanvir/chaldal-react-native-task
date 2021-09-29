@@ -53,7 +53,7 @@ function AppNavigator() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="FilteredList"
+        initialRouteName="Filter"
       >
         <Stack.Screen key="Filter" name="Filter" component={Filter} />
         <Stack.Screen

@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   FlatList,
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
+  Modal,
+  ScrollView,
+  TextInput,
 } from "react-native";
 
 //import component
@@ -16,28 +19,88 @@ import UserCard from "../../Components/UserCard";
 
 import userList from "../../../Assets/data/userList";
 import Icons from "../../../Common/Icons";
+import { set } from "react-native-reanimated";
 
 const FilteredList = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filter, setFilter] = useState(route.params?.filter);
+  const [filteredUsers, setFilterUsers] = useState(route.params?.filter);
+  const [searchText, setSearchText] = useState("");
+
   useEffect(() => {
-    filterGenerateAction();
-  });
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     filterGenerateAction();
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
-  filterGenerateAction = async (data) => {
-    // console.log("function is called !", userList);
+    filterGenerateAction(route.params?.filter);
+    return () => null;
+  }, []);
+  filterGenerateAction = async (filterData) => {
     return null;
   };
+  const filteredUserList = () => {
+    let users = [];
+    if (userList) {
+      userList.map((user) => {
+        let dateList = validDateList(
+          filter?.fromDate,
+          filter?.toDate,
+          objectArray(user.calendar?.dateToDayId)
+        );
+        let mealId = objectArray(user.calendar?.mealIdToDayId);
+        let meal = mealCount(dateList, mealId);
+        if(filter.active)
+
+        users.push({
+          name: user.profile?.name,
+          pictureUrl: user.profile?.pictureUrl,
+          meal: meal,
+        });
+      });
+    }
+    return users;
+  };
+  mealCount = (dateList, mealList) => {
+    let mealAmount = 0;
+    dateList.map((date) => {
+      mealList.map((meal) => {
+        if (date.id === meal.id) {
+          mealAmount = mealAmount + 1;
+        }
+      });
+    });
+
+    return mealAmount;
+  };
+  const validDateList = (from, to, data) => {
+    let dateList = [];
+    data.map((x) => {
+      var inRange =
+        new Date(x.date) >= new Date(from) && new Date(x.date) <= new Date(to);
+      if (inRange) {
+        dateList.push(x);
+      }
+    });
+    return dateList;
+  };
+  const objectArray = (value) => {
+    let array = [];
+    Object.keys(value).map((key) => array.push({ date: key, id: value[key] }));
+    return array;
+  };
+  const generateModal = (filterData) => {
+    setFilter(filterData);
+    setShowFilterModal(false);
+  };
+
   const generateKey = () => {
     return Math.floor(Math.random() * 100000);
   };
   const openFilterModal = () => {
-    console.log("log");
+    setShowFilterModal(true);
   };
+  const onSearchTextChange = (text) => {
+    console.log(filteredUserList());
+    setSearchText(text);
+  };
+
   return (
     <MainLayout
       title="Filtered List"
@@ -60,9 +123,24 @@ const FilteredList = (props) => {
           {Icons.Filter({ tintColor: Colors.MainColor })}
         </TouchableOpacity>
       </View>
+      <View style={styles.SearchContainer}>
+        <TextInput
+          style={styles.SearchInput}
+          onChangeText={(text) => onSearchTextChange(text)}
+          value={searchText}
+          placeholder="Search By Name"
+        />
+        <View style={styles.searchIcon}>
+          {Icons.Search({
+            tintColor: "#000",
+            width: 25,
+            height: 35,
+          })}
+        </View>
+      </View>
       <View style={[globalStyle.Flex]}>
         <FlatList
-          data={userList}
+          data={filteredUserList()}
           renderItem={({ index, item }) => <UserCard key={index} data={item} />}
           keyExtractor={() => generateKey()}
           numColumns={2}
@@ -74,6 +152,33 @@ const FilteredList = (props) => {
           }}
         />
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showFilterModal}
+        onRequestClose={() => setShowFilterModal(false)}
+      >
+        <View style={styles.ModalView}>
+          <View style={styles.modalView}>
+            <View style={[globalStyle.Row, globalStyle.RowSpaceBetween]}>
+              <Text style={styles.modalText}>Edit Filter</Text>
+              <TouchableOpacity onPress={() => setShowFilterModal(false)}>
+                {Icons.Close({ tintColor: Colors.MainColor })}
+              </TouchableOpacity>
+            </View>
+            <ScrollView>
+              <FilterGenerate
+                from={filter?.fromDate}
+                to={filter?.toDate}
+                activeStatus={filter?.active}
+                superActiveStatus={filter?.superActive}
+                boredStatus={filter?.bored}
+                generateAction={(data) => generateModal(data)}
+              />
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </MainLayout>
   );
 };
@@ -87,13 +192,41 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontWeight: "bold",
   },
-  pageTitleSection: {
-    marginVertical: 20,
+  ModalView: {
+    backgroundColor: "#fff",
+    flex: 1,
+    padding: 15,
   },
-  pageTitle: {
-    color: Colors.PrimaryText,
+  modalText: {
+    color: Colors.MainColor,
     fontSize: 20,
-    fontWeight: "700",
+    fontWeight: "bold",
+  },
+  modalCloseText: {
+    fontSize: 25,
+    color: Colors.MainColor,
+    fontWeight: "bold",
+  },
+  SearchContainer: {
+    marginHorizontal: 12,
+    borderColor: Colors.MainColor,
+    borderWidth: 1,
+    borderRadius: 4,
+    height: 35,
+    marginBottom: 10,
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+  searchIcon: {
+    position: "absolute",
+    top: 0,
+    left: 5,
+  },
+  SearchInput: {
+    paddingLeft: 40,
+    alignItems: "center",
+
+    fontSize: 16,
   },
   pageSubTitle: {
     color: Colors.SecondaryText,

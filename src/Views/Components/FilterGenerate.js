@@ -6,12 +6,19 @@ import DatePicker from "./DatePicker";
 import globalStyle from "../../Common/globalStyle";
 import CheckBox from "../../Views/Components/CheckBox";
 
-const FilterGenerate = (props) => {
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
-  const [active, setActive] = useState(true);
-  const [superActive, setSuperActive] = useState(true);
-  const [bored, setBored] = useState(true);
+const FilterGenerate = ({
+  generateAction,
+  from,
+  to,
+  activeStatus,
+  superActiveStatus,
+  boredStatus,
+}) => {
+  const [fromDate, setFromDate] = useState(from ? from : new Date());
+  const [toDate, setToDate] = useState(to ? to : new Date());
+  const [active, setActive] = useState(activeStatus);
+  const [superActive, setSuperActive] = useState(superActiveStatus);
+  const [bored, setBored] = useState(boredStatus);
 
   const generateUserAnalysis = () => {
     let data = {
@@ -21,7 +28,7 @@ const FilterGenerate = (props) => {
       superActive,
       bored,
     };
-    props.generateAction(data);
+    generateAction(data);
   };
   return (
     <View style={styles.filterContainer}>
