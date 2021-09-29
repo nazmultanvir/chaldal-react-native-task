@@ -46,13 +46,19 @@ const FilteredList = (props) => {
         );
         let mealId = objectArray(user.calendar?.mealIdToDayId);
         let meal = mealCount(dateList, mealId);
-        if(filter.active)
-
-        users.push({
+        let userCustomizeData = {
           name: user.profile?.name,
           pictureUrl: user.profile?.pictureUrl,
           meal: meal,
-        });
+        };
+        if (filter.bored && meal < 5) {
+          users.push(userCustomizeData);
+        }
+        if (filter.active && meal >= 5 && meal < 10) {
+          users.push(userCustomizeData);
+        } else if (filter.superActive && meal >= 10) {
+          users.push(userCustomizeData);
+        }
       });
     }
     return users;
