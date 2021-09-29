@@ -61,7 +61,9 @@ const FilteredList = (props) => {
         }
       });
     }
-    return users;
+    return users.filter((user) =>
+      user.name.toLowerCase().includes(searchText.toLowerCase())
+    );
   };
   mealCount = (dateList, mealList) => {
     let mealAmount = 0;
@@ -103,7 +105,6 @@ const FilteredList = (props) => {
     setShowFilterModal(true);
   };
   const onSearchTextChange = (text) => {
-    console.log(filteredUserList());
     setSearchText(text);
   };
 
