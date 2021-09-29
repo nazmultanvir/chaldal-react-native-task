@@ -7,14 +7,14 @@ import Colors from "../../../Common/Color";
 import globalStyle from "../../../Common/globalStyle";
 import FilterGenerate from "../../Components/FilterGenerate";
 
-const Filter = ({ navigation }) => {
+const Filter = (props) => {
   const [fromDate, setFromDate] = useState(new Date("2016-05-10"));
   const [toDate, setToDate] = useState(new Date("2017-05-16"));
   const [active, setActive] = useState(true);
   const [superActive, setSuperActive] = useState(true);
   const [bored, setBored] = useState(true);
   filterGenerateAction = (data) => {
-    navigation.push("FilteredList", { filter: data });
+    props.navigation.push("FilteredList", { filter: data });
   };
   return (
     <MainLayout title="Filter">

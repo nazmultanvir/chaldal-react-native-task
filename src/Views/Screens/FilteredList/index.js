@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   View,
@@ -19,22 +19,13 @@ import UserCard from "../../Components/UserCard";
 
 import userList from "../../../Assets/data/userList";
 import Icons from "../../../Common/Icons";
-import { set } from "react-native-reanimated";
 
 const FilteredList = (props) => {
   const { navigation, route } = props;
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filter, setFilter] = useState(route.params?.filter);
-  const [filteredUsers, setFilterUsers] = useState(route.params?.filter);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    filterGenerateAction(route.params?.filter);
-    return () => null;
-  }, []);
-  filterGenerateAction = async (filterData) => {
-    return null;
-  };
   const filteredUserList = () => {
     let users = [];
     if (userList) {
