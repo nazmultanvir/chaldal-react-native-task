@@ -65,7 +65,7 @@ const FilteredList = (props) => {
       user.name.toLowerCase().includes(searchText.toLowerCase())
     );
   };
-  mealCount = (dateList, mealList) => {
+  const mealCount = (dateList, mealList) => {
     let mealAmount = 0;
     dateList.map((date) => {
       mealList.map((meal) => {
@@ -158,6 +158,11 @@ const FilteredList = (props) => {
             marginHorizontal: 5,
           }}
         />
+        {filteredUserList().length < 1 ? (
+          <View style={styles.noUserFound}>
+            <Text>No User Found</Text>
+          </View>
+        ) : null}
       </View>
       <Modal
         animationType="slide"
@@ -239,5 +244,9 @@ const styles = StyleSheet.create({
     color: Colors.SecondaryText,
     marginTop: 10,
   },
-  filterSection: {},
+  noUserFound: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });
