@@ -19,6 +19,7 @@ import UserCard from "../../Components/UserCard";
 
 import userList from "../../../Assets/data/userList";
 import Icons from "../../../Common/Icons";
+import Data from "../../../Common/Utilities";
 
 const FilteredList = (props) => {
   const { navigation, route } = props;
@@ -26,69 +27,10 @@ const FilteredList = (props) => {
   const [filter, setFilter] = useState(route.params?.filter);
   const [searchText, setSearchText] = useState("");
 
-  const filteredUserList = () => {
-    let users = [];
-    if (userList) {
-      userList.map((user) => {
-        let dateList = validDateList(
-          filter?.fromDate,
-          filter?.toDate,
-          objectArray(user.calendar?.dateToDayId)
-        );
-        let mealId = objectArray(user.calendar?.mealIdToDayId);
-        let meal = mealCount(dateList, mealId);
-        let userCustomizeData = {
-          name: user.profile?.name,
-          pictureUrl: user.profile?.pictureUrl,
-          meal: meal,
-        };
-        if (filter.bored && meal < 5) {
-          users.push(userCustomizeData);
-        }
-        if (filter.active && meal >= 5 && meal < 10) {
-          users.push(userCustomizeData);
-        } else if (filter.superActive && meal >= 10) {
-          users.push(userCustomizeData);
-        }
-      });
-    }
-    return users.filter((user) =>
-      user.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-  };
-  const mealCount = (dateList, mealList) => {
-    let mealAmount = 0;
-    dateList.map((date) => {
-      mealList.map((meal) => {
-        if (date.id === meal.id) {
-          mealAmount = mealAmount + 1;
-        }
-      });
-    });
-
-    return mealAmount;
-  };
-  const validDateList = (from, to, data) => {
-    let dateList = [];
-    data.map((x) => {
-      var inRange =
-        new Date(x.date) >= new Date(from) && new Date(x.date) <= new Date(to);
-      if (inRange) {
-        dateList.push(x);
-      }
-    });
-    return dateList;
-  };
-  const objectArray = (value) => {
-    let array = [];
-    Object.keys(value).map((key) => array.push({ date: key, id: value[key] }));
-    return array;
-  };
   const generateModal = (filterData) => {
     setFilter(filterData);
     setShowFilterModal(false);
   };
-
   const generateKey = () => {
     return Math.floor(Math.random() * 100000);
   };
@@ -138,7 +80,7 @@ const FilteredList = (props) => {
       </View>
       <View style={[globalStyle.Flex]}>
         <FlatList
-          data={filteredUserList()}
+          data={Data.UserDataFilter(filter, searchText)}
           renderItem={({ index, item }) => <UserCard key={index} data={item} />}
           keyExtractor={() => generateKey()}
           numColumns={2}
@@ -149,7 +91,7 @@ const FilteredList = (props) => {
             marginHorizontal: 5,
           }}
         />
-        {filteredUserList().length < 1 ? (
+        {Data.UserDataFilter(filter, searchText).length < 1 ? (
           <View style={styles.noUserFound}>
             <Text>No User Found</Text>
           </View>
